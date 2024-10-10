@@ -1,0 +1,6 @@
+﻿services:
+  vetoutilsapi:
+    image: vetoutilsapi
+    build:
+      context: .
+      dockerfile: VetOutilsApi/Dockerfile
