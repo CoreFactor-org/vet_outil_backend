@@ -17,4 +17,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\VetOutils.Services\VetOutils.Services.csproj" />
+    </ItemGroup>
+
 </Project>

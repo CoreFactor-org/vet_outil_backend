@@ -1,17 +1,20 @@
+using VetOutils.Services;
+
 namespace VetOutilsApi;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddSingleton<IGestionnaireDeFiches, GestionnaireDeFiches>();
 
         var app = builder.Build();
 
