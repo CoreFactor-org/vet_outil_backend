@@ -30,4 +30,14 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
     {
         throw new NotImplementedException();
     }
+
+    public List<Fiche> RechercheFiches(params Etiquette[] etiquettes)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Fiche RechercheFicheParId(int etiquette)
+    {
+        throw new NotImplementedException();
+    }
 }

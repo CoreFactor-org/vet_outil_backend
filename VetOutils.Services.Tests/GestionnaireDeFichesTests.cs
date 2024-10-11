@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Logging;
 
 namespace VetOutils.Services.Tests;
@@ -71,5 +72,85 @@ public class GestionnaireDeFichesTests
 
         //Assert
         Assert.True(res);
+    }
+    
+    [Fact]
+    public void Recherche_Fiche_inexistante()
+    {
+        //Arrange
+        int id = 23;
+
+        //Act
+        Fiche res = _sut.RechercheFicheParId(id);
+
+        //Assert
+        Assert.Null(res);
+    }
+    
+    [Fact]
+    public void Recherche_Fiche_inexistante_par_etiquette()
+    {
+        //Arrange
+
+        //Act
+        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO);
+
+        //Assert
+        Assert.Empty(res);
+    }
+    
+    [Fact]
+    public void Recherche_Fiche_inexistante_par_etiquettes()
+    {
+        //Arrange
+
+        //Act
+        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+
+        //Assert
+        Assert.Empty(res);
+    }
+    
+    [Fact]
+    public void Recherche_Fiche_par_etiquettes_sans_succes()
+    {
+        //Arrange
+        var fiche = new Fiche()
+        {
+            Etiquettes = new List<Etiquette>()
+            {
+                Etiquette.FCO
+            }  
+        };
+        _sut.AjoutFiche(fiche);
+        
+        //Act
+        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+
+        //Assert
+        Assert.Empty(res);
+    }
+    
+    [Fact]
+    public void Recherche_Fiche_par_etiquettes_succes()
+    {
+        //Arrange
+        var fiche = new Fiche()
+        {
+            Id = 67,
+            Etiquettes = new List<Etiquette>()
+            {
+                Etiquette.FCO,
+                Etiquette.Brucellose
+            }  
+        };
+        _sut.AjoutFiche(fiche);
+        
+        //Act
+        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+
+        //Assert
+        Assert.Single(res);
+        Assert.Equal(67,res[0].Id);
     }
 }
