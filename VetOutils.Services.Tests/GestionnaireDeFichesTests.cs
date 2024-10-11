@@ -59,5 +59,17 @@ public class GestionnaireDeFichesTests
         Assert.False(res);
     }
 
+    [Fact]
+    public void Supprimer_Fiche_existante()
+    {
+        //Arrange
+        var fiche = new Fiche();
+        var id = _sut.AjoutFiche(fiche);
 
+        //Act
+        bool res = _sut.SuppressionFiche(id);
+
+        //Assert
+        Assert.True(res);
+    }
 }
