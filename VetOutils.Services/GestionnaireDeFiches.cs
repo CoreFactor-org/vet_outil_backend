@@ -6,6 +6,8 @@ public interface IGestionnaireDeFiches
 
 public class GestionnaireDeFiches : IGestionnaireDeFiches
 {
+    private IList<Fiche> _mesFiches = new List<Fiche>();
+    
     public GestionnaireDeFiches()
     {
 
@@ -13,7 +15,9 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
 
     public int AjoutFiche(Fiche fiche)
     {
-        throw new NotImplementedException();
+        _mesFiches.Add(fiche);
+        fiche.id = _mesFiches.Max(f => f.id) + 1;   // pas de bdd donc grosse triche pour l'id ;)
+        return fiche.id;
     }
 
     public Fiche RecuperationFiche(int id)
