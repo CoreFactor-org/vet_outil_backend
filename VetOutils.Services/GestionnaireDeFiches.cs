@@ -17,8 +17,8 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
         {
             listefiche = new Listefiche();
             listefiche.InitialisationListeFiche();
-            listefiche.AjoutListeFiches();
         }
+        listefiche.AjoutListeFiches();
     }
     
     public int AjoutFiche(Fiche fiche)
@@ -61,8 +61,7 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
     
     public bool RechercheFichesSucces(params Etiquette[] etiquettes)
     {
-        if (listefiche._listefiche
-                .Where(f => f.Etiquettes.Any(e => etiquettes.Contains(e)))
+        if (listefiche._listefiche.Where(f => f.Etiquettes.Any(e => etiquettes.Contains(e)))
                 .ToList().Count == 0)
         {
             return false;

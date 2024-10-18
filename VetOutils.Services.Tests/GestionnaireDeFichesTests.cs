@@ -16,7 +16,12 @@ public class GestionnaireDeFichesTests
             Titre = "Ajout fiche",
             Description = "Description ajout",
             DateCreation = DateTime.Now,
-            DateModification = DateTime.Now
+            DateModification = DateTime.Now,
+            Etiquettes = new List<Etiquette>()
+            {
+            Etiquette.FCO,
+            Etiquette.Ovin
+        }
         };
 
         //Act
@@ -124,7 +129,7 @@ public class GestionnaireDeFichesTests
         bool res = _sut.RechercheFichesSucces(Etiquette.Absent);
 
         //Assert
-        Assert.Equal(false, res);
+        Assert.False(res);
     }
 
     [Fact]
@@ -136,6 +141,6 @@ public class GestionnaireDeFichesTests
         bool res = _sut.RechercheFichesSucces(Etiquette.Brucellose, Etiquette.FCO);
 
         //Assert
-        Assert.Equal(true, res);
+        Assert.True(res);
     }
 }
