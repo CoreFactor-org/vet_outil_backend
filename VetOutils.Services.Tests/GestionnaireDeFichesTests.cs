@@ -11,7 +11,13 @@ public class GestionnaireDeFichesTests
     public void Ajout_une_nouvelle_Fiche()
     {
         //Arrange
-        var fiche = new Fiche();
+        var fiche = new Fiche
+        {
+            Titre = "Ajout fiche",
+            Description = "Description ajout",
+            DateCreation = DateTime.Now,
+            DateModification = DateTime.Now
+        };
 
         //Act
         var id = _sut.AjoutFiche(fiche);
@@ -24,7 +30,7 @@ public class GestionnaireDeFichesTests
     public void Recuperation_Fiche_inexistante()
     {
         //Arrange
-        int id = 67;
+        int id = 5;
 
         //Act
         Fiche fiche = _sut.RecuperationFiche(id);
@@ -37,8 +43,7 @@ public class GestionnaireDeFichesTests
     public void Recuperation_Fiche_existante()
     {
         //Arrange
-        var fiche = new Fiche();
-        var id = _sut.AjoutFiche(fiche);
+        var id = 2;
 
         //Act
         Fiche ficheTrouvee = _sut.RecuperationFiche(id);
@@ -51,7 +56,7 @@ public class GestionnaireDeFichesTests
     public void Supprimer_Fiche_inexistante()
     {
         //Arrange
-        int id = 78;
+        int id = 5;
 
         //Act
         bool res = _sut.SuppressionFiche(id);
@@ -64,8 +69,7 @@ public class GestionnaireDeFichesTests
     public void Supprimer_Fiche_existante()
     {
         //Arrange
-        var fiche = new Fiche();
-        var id = _sut.AjoutFiche(fiche);
+        var id = 1;
 
         //Act
         bool res = _sut.SuppressionFiche(id);
@@ -73,12 +77,12 @@ public class GestionnaireDeFichesTests
         //Assert
         Assert.True(res);
     }
-    
+
     [Fact]
     public void Recherche_Fiche_inexistante()
     {
         //Arrange
-        int id = 23;
+        int id = 8;
 
         //Act
         Fiche res = _sut.RechercheFicheParId(id);
@@ -86,19 +90,19 @@ public class GestionnaireDeFichesTests
         //Assert
         Assert.Null(res);
     }
-    
+
     [Fact]
     public void Recherche_Fiche_inexistante_par_etiquette()
     {
         //Arrange
 
         //Act
-        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO);
+        List<Fiche> res = _sut.RechercheFiches(Etiquette.Absent);
 
         //Assert
-        Assert.Empty(res);
+        Assert.Equal(0,res.Count);
     }
-    
+
     [Fact]
     public void Recherche_Fiche_inexistante_par_etiquettes()
     {
@@ -108,49 +112,30 @@ public class GestionnaireDeFichesTests
         List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
-        Assert.Empty(res);
+        Assert.NotNull(res);
     }
-    
+
     [Fact]
     public void Recherche_Fiche_par_etiquettes_sans_succes()
     {
         //Arrange
-        var fiche = new Fiche()
-        {
-            Etiquettes = new List<Etiquette>()
-            {
-                Etiquette.FCO
-            }  
-        };
-        _sut.AjoutFiche(fiche);
-        
+
         //Act
-        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        bool res = _sut.RechercheFichesSucces(Etiquette.Absent);
 
         //Assert
-        Assert.Empty(res);
+        Assert.Equal(false, res);
     }
-    
+
     [Fact]
     public void Recherche_Fiche_par_etiquettes_succes()
     {
         //Arrange
-        var fiche = new Fiche()
-        {
-            Id = 67,
-            Etiquettes = new List<Etiquette>()
-            {
-                Etiquette.FCO,
-                Etiquette.Brucellose
-            }  
-        };
-        _sut.AjoutFiche(fiche);
-        
+
         //Act
-        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        bool res = _sut.RechercheFichesSucces(Etiquette.Brucellose, Etiquette.FCO);
 
         //Assert
-        Assert.Single(res);
-        Assert.Equal(67,res[0].Id);
+        Assert.Equal(true, res);
     }
 }

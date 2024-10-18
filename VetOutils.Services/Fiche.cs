@@ -11,6 +11,11 @@ public class Fiche
     public List<Etiquette> Etiquettes { get; set; }
     public FormatAffichageSngtvStandard Standard { get; set; }
     
+    // Méthode pour afficher les informations d'une fiche
+    public void AfficherFiche()
+    {
+        Console.WriteLine($"Id: {Id}, Titre: {Titre}, Description: {Description}");
+    }
 }
 
 public enum Etiquette
@@ -18,6 +23,7 @@ public enum Etiquette
     Ovin,
     Brucellose,
     FCO,
+    Absent,
 }
 
 public class FormatAffichageSngtvStandard
