@@ -68,7 +68,6 @@ public class Listefiche
             {
                 Etiquette.FCO,
                 Etiquette.Brucellose,
-                Etiquette.Ovin
             }
         };
         _listefiche.Add(fiche1);
