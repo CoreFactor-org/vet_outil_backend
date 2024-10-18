@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace VetOutils.Services;
 
 public interface IGestionnaireDeFiches
@@ -9,29 +7,43 @@ public interface IGestionnaireDeFiches
 
 public class GestionnaireDeFiches : IGestionnaireDeFiches
 {
-    private static Listefiche listefiche;
+    private static Listefiche? _listefiche;
     
     public GestionnaireDeFiches()
     {
-        if (listefiche == null)
+        if (_listefiche == null)
         {
-            listefiche = new Listefiche();
-            listefiche.InitialisationListeFiche();
+            _listefiche = new Listefiche();
+            _listefiche.InitialisationListeFiche();
         }
-        listefiche.AjoutListeFiches();
+        _listefiche.AjoutListeFiches();
     }
     
-    public int AjoutFiche(Fiche fiche)
+    public int? AjoutFiche(Fiche fiche)
     {
-        int idMax = listefiche._listefiche.Max(p => p.Id);
-        fiche.Id = idMax + 1;
-        listefiche._listefiche.Add(fiche);
-        return fiche.Id;
+        if (_listefiche?._listefiche == null)
+        {
+            return 1;
+        }
+        else
+        {
+            var idMax = _listefiche._listefiche.Max(p => p.Id)+1;
+            fiche.Id = idMax;
+            _listefiche._listefiche.Add(fiche);
+            return fiche.Id;
+        }
     }
 
-    public Fiche RecuperationFiche(int id)
+    public Fiche? RecuperationFiche(int id)
     {
-        return listefiche._listefiche.Find(f => f.Id == id);
+        if (_listefiche?._listefiche != null)
+        {
+            return _listefiche._listefiche.Find(f => f.Id == id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -41,10 +53,17 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
     /// <returns>Renvoie true si la fiche a été supprimée</returns>
     public bool SuppressionFiche(int id)
     {
-        int _res = listefiche._listefiche.RemoveAll(f => f.Id == id);
-        if (_res == 1)
+        if (_listefiche?._listefiche != null)
         {
-            return true;
+            int res = _listefiche._listefiche.RemoveAll(f => f.Id == id);
+            if (res == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -52,29 +71,54 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
         }
     }
 
-    public List<Fiche> RechercheFiches(params Etiquette[] etiquettes)
+    public List<Fiche>? RechercheFiches(params Etiquette[] etiquettes)
     {
-        return listefiche._listefiche
-            .Where(f => f.Etiquettes.Any(e => etiquettes.Contains(e)))
-            .ToList();
+        if (_listefiche?._listefiche != null)
+        {
+            return _listefiche._listefiche
+                .Where(f =>f.Etiquettes.Any(e => etiquettes.Contains(e)))
+                .ToList();
+            
+        }
+        else
+        {
+            return null;
+        }
     }
     
     public bool RechercheFichesSucces(params Etiquette[] etiquettes)
     {
-        if (listefiche._listefiche.Where(f => f.Etiquettes.Any(e => etiquettes.Contains(e)))
-                .ToList().Count == 0)
+        if (_listefiche?._listefiche != null)
         {
-            return false;
+            List<Fiche> fichesTrouvees = _listefiche._listefiche
+                .Where(f => f.Etiquettes.Any(e => etiquettes.Contains(e)))
+                .ToList();
+            if (fichesTrouvees.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
-            return true;
+            return false;
         }
     }
 
-    public Fiche RechercheFicheParId(int id)
+    public Fiche? RechercheFicheParId(int id)
     {   
         // Obtenir une fiche par Id
-        return listefiche._listefiche.Find(f => f.Id == id);
+        if (_listefiche?._listefiche != null)
+        {
+            Fiche? res = _listefiche._listefiche.Find(f => f.Id == id);
+            return res;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

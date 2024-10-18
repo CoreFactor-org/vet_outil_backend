@@ -1,13 +1,11 @@
 // GestionnaireFiches.cs
-using System;
-using System.Collections.Generic;
 
 namespace VetOutils.Services;
 
 public class Listefiche
 {
     // Liste d'objets Fiche
-    public List<Fiche> _listefiche;
+    public List<Fiche>? _listefiche;
     
     public void InitialisationListeFiche()
     {
@@ -17,7 +15,7 @@ public class Listefiche
 
     public void AjoutListeFiches()
     {
-        if (_listefiche.Find(f => f.Id == 1) == null)
+        if (_listefiche?.Find(f => f.Id == 1) == null)
         {
             Fiche fiche1 = new Fiche
             {
@@ -32,10 +30,10 @@ public class Listefiche
                     Etiquette.Brucellose
                 }
             };
-            _listefiche.Add(fiche1);
+            _listefiche?.Add(fiche1);
         }
 
-        if (_listefiche.Find(f => f.Id == 2) == null)
+        if (_listefiche?.Find(f => f.Id == 2) == null)
         {
             Fiche fiche2 = new Fiche
             {
@@ -50,10 +48,10 @@ public class Listefiche
                     Etiquette.Brucellose
                 }
             };
-            _listefiche.Add(fiche2);
+            _listefiche?.Add(fiche2);
         }
 
-        if (_listefiche.Find(f => f.Id == 3) == null)
+        if (_listefiche?.Find(f => f.Id == 3) == null)
         {
             Fiche fiche3 = new Fiche
             {
@@ -69,10 +67,10 @@ public class Listefiche
                     Etiquette.Ovin
                 }
             };
-            _listefiche.Add(fiche3);
+            _listefiche?.Add(fiche3);
         }
 
-        if (_listefiche.Find(f => f.Id == 4) == null)
+        if (_listefiche?.Find(f => f.Id == 4) == null)
         {
             Fiche fiche4 = new Fiche
             {
@@ -87,7 +85,7 @@ public class Listefiche
                     Etiquette.Brucellose,
                 }
             };
-            _listefiche.Add(fiche4);
+            _listefiche?.Add(fiche4);
         }
     }
 }

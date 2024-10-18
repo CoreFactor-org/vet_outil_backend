@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Logging;
-
 namespace VetOutils.Services.Tests;
 
 public class GestionnaireDeFichesTests
@@ -38,7 +35,7 @@ public class GestionnaireDeFichesTests
         int id = 5;
 
         //Act
-        Fiche fiche = _sut.RecuperationFiche(id);
+        Fiche? fiche = _sut.RecuperationFiche(id);
 
         //Assert
         Assert.Null(fiche);
@@ -51,10 +48,9 @@ public class GestionnaireDeFichesTests
         var id = 2;
 
         //Act
-        Fiche ficheTrouvee = _sut.RecuperationFiche(id);
-
+        Fiche? fiche = _sut.RecuperationFiche(id);
         //Assert
-        Assert.NotNull(ficheTrouvee);
+        Assert.NotNull(fiche);
     }
 
     [Fact]
@@ -90,7 +86,7 @@ public class GestionnaireDeFichesTests
         int id = 8;
 
         //Act
-        Fiche res = _sut.RechercheFicheParId(id);
+        Fiche? res = _sut.RechercheFicheParId(id);
 
         //Assert
         Assert.Null(res);
@@ -102,10 +98,10 @@ public class GestionnaireDeFichesTests
         //Arrange
 
         //Act
-        List<Fiche> res = _sut.RechercheFiches(Etiquette.Absent);
+        List<Fiche>? res = _sut.RechercheFiches(Etiquette.Absent);
 
         //Assert
-        Assert.Equal(0,res.Count);
+        Assert.Null(res);
     }
 
     [Fact]
@@ -114,7 +110,7 @@ public class GestionnaireDeFichesTests
         //Arrange
 
         //Act
-        List<Fiche> res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        List<Fiche>? res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.NotNull(res);
