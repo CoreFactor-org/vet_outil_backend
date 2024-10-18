@@ -2,15 +2,23 @@ namespace VetOutils.Services;
 
 public class Fiche
 {
-    public int Id { get; set; }
-    public DateTimeOffset DateCreation { get; set; }
-    public DateTimeOffset DateModification { get; set; }
-    public string CheminPdf { get; set; }
-    public string Titre { get; set; }
-    public string Description { get; set; }
-    public List<Etiquette> Etiquettes { get; set; }
-    public FormatAffichageSngtvStandard Standard { get; set; }
-    
+    /// <summary>
+    /// Le numéro unique qui identifie la fiche du point de vue métier
+    /// </summary>
+    public required Guid FicheId { get; init; }
+
+    /// <summary>
+    /// L'identifiant en base de données
+    /// </summary>
+    public int BddId { get; init; }
+
+    public required DateTimeOffset DateCreation { get; init; }
+    public DateTimeOffset DateModification { get; init; }
+    public string? CheminPdf { get; init; }
+    public required string Titre { get; init; }
+    public string? Description { get; init; }
+    public HashSet<Etiquette> Etiquettes { get; init; } = [];
+    public FormatAffichageSngtvStandard? Standard { get; init; }
 }
 
 public enum Etiquette

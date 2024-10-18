@@ -6,19 +6,31 @@ public interface IGestionnaireDeFiches
 
 public class GestionnaireDeFiches : IGestionnaireDeFiches
 {
+    private readonly Dictionary<Guid, Fiche> _fichesParIdentifiants;
+
     public GestionnaireDeFiches()
     {
-
+        _fichesParIdentifiants = new Dictionary<Guid, Fiche>();
     }
 
-    public int AjoutFiche(Fiche fiche)
+    public Guid AjoutFiche(Fiche fiche)
     {
-        throw new NotImplementedException();
+        if (_fichesParIdentifiants.TryAdd(fiche.FicheId, fiche))
+        {
+            return fiche.FicheId;
+        }
+
+        return Guid.Empty;
     }
 
-    public Fiche RecuperationFiche(int id)
+    public Fiche? RecuperationFiche(Guid id)
     {
-        throw new NotImplementedException();
+        if (_fichesParIdentifiants.ContainsKey(id))
+        {
+            return _fichesParIdentifiants[id];
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -26,18 +38,33 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
     /// </summary>
     /// <param name="id">l'identifiant de la fiche à supprimer</param>
     /// <returns>Renvoie true si la fiche a été supprimée</returns>
-    public bool SuppressionFiche(int id)
+    public bool SuppressionFiche(Guid id)
     {
-        throw new NotImplementedException();
+        return _fichesParIdentifiants.Remove(id);
     }
 
     public List<Fiche> RechercheFiches(params Etiquette[] etiquettes)
     {
-        throw new NotImplementedException();
-    }
+        var fichesAvecLesBonnesEtiquettes = new List<Fiche>();
 
-    public Fiche RechercheFicheParId(int etiquette)
-    {
-        throw new NotImplementedException();
+        foreach (var ficheEtIdentifiant in _fichesParIdentifiants.Values)
+        {
+            var toutes = true;
+            foreach (var etiquette in etiquettes)
+            {
+                if (!ficheEtIdentifiant.Etiquettes.Contains(etiquette))
+                {
+                    toutes = false;
+                    break;
+                }
+            }
+
+            if (toutes)
+            {
+                fichesAvecLesBonnesEtiquettes.Add(ficheEtIdentifiant);
+            }
+        }
+
+        return fichesAvecLesBonnesEtiquettes;
     }
 }
