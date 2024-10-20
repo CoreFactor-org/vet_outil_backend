@@ -13,21 +13,21 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
         _fichesParIdentifiants = new Dictionary<Guid, Fiche>();
     }
 
-    public Guid AjoutFiche(Fiche fiche)
+    public Guid AjouteFiche(Fiche paramFiche)
     {
-        if (_fichesParIdentifiants.TryAdd(fiche.FicheId, fiche))
+        if (_fichesParIdentifiants.TryAdd(paramFiche.FicheGuid, paramFiche))
         {
-            return fiche.FicheId;
+            return paramFiche.FicheGuid;
         }
 
         return Guid.Empty;
     }
 
-    public Fiche? RecuperationFiche(Guid id)
+    public Fiche? GetFiche(Guid paramGuid)
     {
-        if (_fichesParIdentifiants.ContainsKey(id))
+        if (_fichesParIdentifiants.ContainsKey(paramGuid))
         {
-            return _fichesParIdentifiants[id];
+            return _fichesParIdentifiants[paramGuid];
         }
 
         return null;
@@ -36,21 +36,21 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
     /// <summary>
     /// Supprime une fiche par identifiant
     /// </summary>
-    /// <param name="id">l'identifiant de la fiche à supprimer</param>
+    /// <param name="paramGuid">l'identifiant de la fiche à supprimer</param>
     /// <returns>Renvoie true si la fiche a été supprimée</returns>
-    public bool SuppressionFiche(Guid id)
+    public bool SupprimeFiche(Guid paramGuid)
     {
-        return _fichesParIdentifiants.Remove(id);
+        return _fichesParIdentifiants.Remove(paramGuid);
     }
 
-    public List<Fiche> RechercheFiches(params Etiquette[] etiquettes)
+    public List<Fiche> RechercheFiches(params Etiquette[] paramEtiquettes)
     {
         var fichesAvecLesBonnesEtiquettes = new List<Fiche>();
 
         foreach (var ficheEtIdentifiant in _fichesParIdentifiants.Values)
         {
             var toutes = true;
-            foreach (var etiquette in etiquettes)
+            foreach (var etiquette in paramEtiquettes)
             {
                 if (!ficheEtIdentifiant.Etiquettes.Contains(etiquette))
                 {

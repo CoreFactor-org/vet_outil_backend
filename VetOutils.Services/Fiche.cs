@@ -5,12 +5,12 @@ public class Fiche
     /// <summary>
     /// Le numéro unique qui identifie la fiche du point de vue métier
     /// </summary>
-    public required Guid FicheId { get; init; }
+    public required Guid FicheGuid { get; init; }
 
     /// <summary>
     /// L'identifiant en base de données
     /// </summary>
-    public int BddId { get; init; }
+    public int FicheId { get; init; }
 
     public required DateTimeOffset DateCreation { get; init; }
     public DateTimeOffset DateModification { get; init; }
