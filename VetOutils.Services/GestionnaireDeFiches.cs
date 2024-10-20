@@ -43,9 +43,14 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
         return _fichesParIdentifiants.Remove(paramGuid);
     }
 
-    public List<Fiche> RechercheFiches(params Etiquette[] paramEtiquettes)
+    /// <summary>
+    /// Rechercher des fiches par leurs étiquettes
+    /// </summary>
+    /// <param name="paramEtiquettes"></param>
+    /// <returns></returns>
+    public List<Fiche> RechercheFichesParEtiquettes(params Etiquette[] paramEtiquettes)
     {
-        var fichesAvecLesBonnesEtiquettes = new List<Fiche>();
+        var fichesTrouvees = new List<Fiche>();
 
         foreach (var ficheEtIdentifiant in _fichesParIdentifiants.Values)
         {
@@ -61,10 +66,10 @@ public class GestionnaireDeFiches : IGestionnaireDeFiches
 
             if (toutes)
             {
-                fichesAvecLesBonnesEtiquettes.Add(ficheEtIdentifiant);
+                fichesTrouvees.Add(ficheEtIdentifiant);
             }
         }
 
-        return fichesAvecLesBonnesEtiquettes;
+        return fichesTrouvees;
     }
 }

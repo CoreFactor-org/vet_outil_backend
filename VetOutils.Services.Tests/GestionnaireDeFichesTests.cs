@@ -107,7 +107,7 @@ public class GestionnaireDeFichesTests
         //Arrange
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO);
 
         //Assert
         Assert.Empty(res);
@@ -119,7 +119,7 @@ public class GestionnaireDeFichesTests
         //Arrange
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.Empty(res);
@@ -142,7 +142,7 @@ public class GestionnaireDeFichesTests
         _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.Empty(res);
@@ -167,7 +167,7 @@ public class GestionnaireDeFichesTests
         _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.Single(res);
@@ -193,7 +193,7 @@ public class GestionnaireDeFichesTests
         _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.RechercheFiches();
+        var res = _sut.RechercheFichesParEtiquettes();
 
         //Assert
         Assert.Single(res);
