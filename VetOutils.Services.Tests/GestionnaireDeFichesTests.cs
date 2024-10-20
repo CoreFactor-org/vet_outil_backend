@@ -10,13 +10,13 @@ public class GestionnaireDeFichesTests
         //Arrange
         var fiche = new Fiche
         {
-            FicheId = Guid.NewGuid(),
+            FicheGuid = Guid.NewGuid(),
             DateCreation = DateTimeOffset.Now,
             Titre = "Titre_bidon",
         };
 
         //Act
-        var id = _sut.AjoutFiche(fiche);
+        var id = _sut.AjouteFiche(fiche);
 
         //Assert
         Assert.NotEqual(Guid.Empty, id);
@@ -29,7 +29,7 @@ public class GestionnaireDeFichesTests
         var id = Guid.NewGuid();
 
         //Act
-        var fiche = _sut.RecuperationFiche(id);
+        var fiche = _sut.GetFiche(id);
 
         //Assert
         Assert.Null(fiche);
@@ -41,15 +41,15 @@ public class GestionnaireDeFichesTests
         //Arrange
         var fiche = new Fiche
         {
-            FicheId = Guid.NewGuid(),
+            FicheGuid = Guid.NewGuid(),
             DateCreation = DateTimeOffset.Now,
             Titre = "Titre_bidon",
         };
 
-        var id = _sut.AjoutFiche(fiche);
+        var id = _sut.AjouteFiche(fiche);
 
         //Act
-        var ficheTrouvee = _sut.RecuperationFiche(id);
+        var ficheTrouvee = _sut.GetFiche(id);
 
         //Assert
         Assert.NotNull(ficheTrouvee);
@@ -62,7 +62,7 @@ public class GestionnaireDeFichesTests
         var id = new Guid("A26F4BD3-7E38-4484-885D-9FDA936DC1B7");
 
         //Act
-        var res = _sut.SuppressionFiche(id);
+        var res = _sut.SupprimeFiche(id);
 
         //Assert
         Assert.False(res);
@@ -74,14 +74,14 @@ public class GestionnaireDeFichesTests
         //Arrange
         var fiche = new Fiche
         {
-            FicheId = Guid.NewGuid(),
+            FicheGuid = Guid.NewGuid(),
             DateCreation = DateTimeOffset.Now,
             Titre = "Titre_bidon",
         };
-        var id = _sut.AjoutFiche(fiche);
+        var id = _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.SuppressionFiche(id);
+        var res = _sut.SupprimeFiche(id);
 
         //Assert
         Assert.True(res);
@@ -95,7 +95,7 @@ public class GestionnaireDeFichesTests
         var id = Guid.NewGuid();
 
         //Act
-        var res = _sut.RecuperationFiche(id);
+        var res = _sut.GetFiche(id);
 
         //Assert
         Assert.Null(res);
@@ -107,7 +107,7 @@ public class GestionnaireDeFichesTests
         //Arrange
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO);
 
         //Assert
         Assert.Empty(res);
@@ -119,7 +119,7 @@ public class GestionnaireDeFichesTests
         //Arrange
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.Empty(res);
@@ -135,14 +135,14 @@ public class GestionnaireDeFichesTests
             {
                 Etiquette.FCO
             },
-            FicheId = Guid.NewGuid(),
+            FicheGuid = Guid.NewGuid(),
             DateCreation = DateTimeOffset.Now,
             Titre = "Titre_bidon",
         };
-        _sut.AjoutFiche(fiche);
+        _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.Empty(res);
@@ -154,24 +154,24 @@ public class GestionnaireDeFichesTests
         //Arrange
         var fiche = new Fiche
         {
-            BddId = 67,
+            FicheId = 67,
             Etiquettes = new HashSet<Etiquette>
             {
                 Etiquette.FCO,
                 Etiquette.Brucellose
             },
-            FicheId = Guid.NewGuid(),
+            FicheGuid = Guid.NewGuid(),
             DateCreation = DateTimeOffset.Now,
             Titre = "Titre_bidon",
         };
-        _sut.AjoutFiche(fiche);
+        _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.RechercheFiches(Etiquette.FCO, Etiquette.Brucellose);
+        var res = _sut.RechercheFichesParEtiquettes(Etiquette.FCO, Etiquette.Brucellose);
 
         //Assert
         Assert.Single(res);
-        Assert.Equal(67, res[0].BddId);
+        Assert.Equal(67, res[0].FicheId);
     }
 
     [Fact]
@@ -180,23 +180,23 @@ public class GestionnaireDeFichesTests
         //Arrange
         var fiche = new Fiche
         {
-            BddId = 67,
+            FicheId = 67,
             Etiquettes = new HashSet<Etiquette>()
             {
                 Etiquette.FCO,
                 Etiquette.Brucellose
             },
-            FicheId = Guid.NewGuid(),
+            FicheGuid = Guid.NewGuid(),
             DateCreation = DateTimeOffset.Now,
             Titre = "Titre_bidon",
         };
-        _sut.AjoutFiche(fiche);
+        _sut.AjouteFiche(fiche);
 
         //Act
-        var res = _sut.RechercheFiches();
+        var res = _sut.RechercheFichesParEtiquettes();
 
         //Assert
         Assert.Single(res);
-        Assert.Equal(67, res[0].BddId);
+        Assert.Equal(67, res[0].FicheId);
     }
 }
