@@ -1,14 +1,13 @@
-using System;
-
 namespace VetOutils.Services.Tests;
 
 public class FicheTests
 {
-    private Fiche _sut = new Fiche
+    private readonly Fiche _sut = new Fiche
     {
         FicheId = Guid.NewGuid(),
         BddId = 78,
-        Titre = "Tetelle",
+        Titre = "Impact de l'introduction du T-Rex sur la production laitière des brebis en zone Roquefort",
+        Auteurs = ["Defachelles", "Gouache"],
         DateCreation = DateTimeOffset.Now.AddMonths(-267),
         DateModification = DateTimeOffset.Now.AddDays(-2),
         Standard = new FormatAffichageSngtvStandard(),
@@ -31,5 +30,38 @@ public class FicheTests
         //Assert
         Assert.Equal("Tetelle", res);
     }
+
+    [Fact]
+    public void Fiche_a_des_auteurs_correctement_ordonne()
+    {
+        //Arrange
+
+        //Act
+        var res = _sut.Auteurs;
+
+        //Assert
+        Assert.Equal(2, res.Count);
+        Assert.Equal("Defachelles", res[0]);
+        Assert.Equal("Gouache", res[1]);
+    }
+
+    [Fact]
+    public void Fiche_nouvelle_a_aucun_auteur()
+    {
+        //Arrange
+        var nouvelleFiche = new Fiche
+        {
+            FicheId = Guid.NewGuid(),
+            DateCreation = DateTimeOffset.Now,
+            Titre = "l'alimentation des t-Rex"
+        };
+
+        //Act
+        var res = nouvelleFiche.Auteurs;
+
+        //Assert
+        Assert.Empty(res);
+    }
+
 
 }

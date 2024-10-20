@@ -20,6 +20,7 @@ public class Fiche
     /// </summary>
     public DetailLien? LienSource { get; set; }
 
+    public List<string> Auteurs { get; set; } = [];
     public required string Titre { get; init; }
     public string? Description { get; init; }
     public HashSet<Etiquette> Etiquettes { get; init; } = [];
